@@ -77,7 +77,22 @@ func (arr *CustomizedArray) Size() int {
 // 扩容操作
 func (arr *CustomizedArray) expandCapacity() {
 	newArr := make([]int, len(arr.array)*2)
+	// 这个地方还是使用了库函数
 	copy(newArr, arr.array)
+	arr.array = newArr
+}
+
+// 手写扩容机制
+func (arr *CustomizedArray) expandCapacityHand() {
+	// 创建一个新的数组，容量是原来的两倍
+	newArr := make([]int, len(arr.array)*2)
+
+	// 将愿数组中的元素逐个复制到新数组中
+	for i := 0; i < len(arr.array); i++ {
+		newArr[i] = arr.array[i]
+	}
+
+	// 将愿数组中的引用指向新数组，不需要将愿数组删除，Go GC垃圾回收机制会去进行处理
 	arr.array = newArr
 }
 
