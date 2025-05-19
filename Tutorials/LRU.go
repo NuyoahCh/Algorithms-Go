@@ -42,9 +42,9 @@ func (c *LRUCache) Put(key int, value int) {
 	if node, ok := c.Map[key]; ok {
 		node.Value = value
 		// remove
-
+		c.removeNode(node)
 		// uodate
-
+		c.updateHead(node)
 	} else {
 		node = &Node{Key: key, Value: value}
 		c.Map[key] = node
