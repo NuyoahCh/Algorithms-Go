@@ -1,5 +1,10 @@
 package main
 
+import (
+	"math/rand"
+	"time"
+)
+
 // 快速排序
 func quickSort(array []int) []int {
 	if array == nil || len(array) == 0 {
@@ -42,6 +47,25 @@ func swap(array []int, i, j int) {
 	temp := array[i]
 	array[i] = array[j]
 	array[j] = temp
+}
+
+func findKthLargest(nums []int, k int) int {
+	rand.Seed(time.Now().UnixNano())
+	return quickSelect(nums, 0, len(nums)-1, len(nums)-k)
+}
+
+func quickSelect(nums []int, left, right int, targetIdx int) int {
+	for left <= right {
+		pivot := partition(nums, left, right)
+		if pivot == targetIdx {
+			return nums[pivot]
+		} else if pivot < targetIdx {
+			left = pivot + 1
+		} else {
+			right = pivot - 1
+		}
+	}
+	return nums[left]
 }
 
 // 归并排序
